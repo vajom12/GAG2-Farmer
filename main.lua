@@ -1,6 +1,6 @@
 --========================================================
 -- GAG2 FARMER V3.2 LOADER
--- One Brain scheduler -> Core -> Defense -> Economy -> Events
+-- One Brain scheduler -> Core -> Defense -> Economy -> Sprinklers -> Events
 --========================================================
 
 local BASE = "https://raw.githubusercontent.com/vajom12/GAG2-Farmer/main/"
@@ -56,10 +56,12 @@ run("defense_v32.lua")
 task.wait(0.20)
 run("economy_v32.lua")
 task.wait(0.20)
+run("sprinkler_v32.lua")
+task.wait(0.20)
 run("event_v32.lua")
 
 print("============================================")
 print(" GAG2 FARMER V3.2 - CENTRAL BRAIN ACTIVE")
 print(" One action at a time; higher priority can preempt")
-print(" Night > Rare Event > Harvest > Sell > Pet > Deploy > Pack > Plant > Buy > Expand")
+print(" Night > Intruder > Rare Event > Harvest > Sell > Pet > Sprinkler > Pack > Plant > Buy > Expand")
 print("============================================")
