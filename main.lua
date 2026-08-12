@@ -1,6 +1,6 @@
 --========================================================
 -- GAG2 FARMER V3.2 LOADER
--- One Brain scheduler -> Core -> Defense -> Economy -> Sprinklers -> Events
+-- Brain -> Transaction Policy -> Core -> Defense -> Economy -> Sprinklers -> Events
 --========================================================
 
 local BASE = "https://raw.githubusercontent.com/vajom12/GAG2-Farmer/main/"
@@ -49,7 +49,9 @@ if not run("brain_v32.lua") then
     return
 end
 
-task.wait(0.30)
+task.wait(0.20)
+run("transaction_v32.lua")
+task.wait(0.20)
 run("core_v32.lua")
 task.wait(0.20)
 run("defense_v32.lua")
@@ -62,6 +64,7 @@ run("event_v32.lua")
 
 print("============================================")
 print(" GAG2 FARMER V3.2 - CENTRAL BRAIN ACTIVE")
-print(" One action at a time; higher priority can preempt")
+print(" One scheduler; one transaction at a time")
 print(" Night > Intruder > Rare Event > Harvest > Sell > Pet > Sprinkler > Pack > Plant > Buy > Expand")
+print(" Pet/Sprinkler transactions stay locked until finished unless safety/rare priority preempts")
 print("============================================")
