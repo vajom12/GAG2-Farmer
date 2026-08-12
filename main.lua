@@ -1,12 +1,11 @@
 --========================================================
--- GAG2 FARMER V3.2 LOADER
--- Brain -> Transaction Policy -> Core -> Defense -> Economy -> Sprinklers -> Events
+-- GAG2 FARMER V3.2.1 LOADER
+-- Brain -> Transactions -> Core -> Defense -> Economy -> Sprinklers -> Events -> FastProgress patch
 --========================================================
 
 local BASE = "https://raw.githubusercontent.com/vajom12/GAG2-Farmer/main/"
 local ENV = (getgenv and getgenv()) or _G
 
--- Stop every older generation before V3.2 starts.
 for _, stopName in ipairs({
     "GAG2_BRAIN_V32_STOP",
     "GAG2_CORE_V31_STOP",
@@ -16,9 +15,7 @@ for _, stopName in ipairs({
     "GAG2_EVENT_V3_STOP",
 }) do
     local fn = ENV[stopName]
-    if type(fn) == "function" then
-        pcall(fn)
-    end
+    if type(fn) == "function" then pcall(fn) end
 end
 
 ENV.GAG2_V31_ACTIVITY_LOCK = nil
@@ -36,35 +33,30 @@ local function run(path)
     end)
 
     if not ok then
-        warn("[GAG2 V3.2 LOADER] Failed:", path, err)
+        warn("[GAG2 V3.2.1 LOADER] Failed:", path, err)
     else
-        print("[GAG2 V3.2 LOADER] Loaded", path)
+        print("[GAG2 V3.2.1 LOADER] Loaded", path)
     end
-
     return ok
 end
 
 if not run("brain_v32.lua") then
-    warn("[GAG2 V3.2 LOADER] Brain failed; stopping loader")
+    warn("[GAG2 V3.2.1 LOADER] Brain failed; stopping loader")
     return
 end
 
-task.wait(0.20)
-run("transaction_v32.lua")
-task.wait(0.20)
-run("core_v32.lua")
-task.wait(0.20)
-run("defense_v32.lua")
-task.wait(0.20)
-run("economy_v32.lua")
-task.wait(0.20)
-run("sprinkler_v32.lua")
-task.wait(0.20)
-run("event_v32.lua")
+task.wait(0.15); run("transaction_v32.lua")
+task.wait(0.15); run("core_v32.lua")
+task.wait(0.15); run("defense_v32.lua")
+task.wait(0.15); run("economy_v32.lua")
+task.wait(0.15); run("sprinkler_v32.lua")
+task.wait(0.15); run("event_v32.lua")
+
+-- Loaded last intentionally: replaces conservative same-name tasks with faster,
+-- Punk-like progression while keeping the central transaction scheduler.
+task.wait(0.20); run("v321_fastprogress.lua")
 
 print("============================================")
-print(" GAG2 FARMER V3.2 - CENTRAL BRAIN ACTIVE")
-print(" One scheduler; one transaction at a time")
-print(" Night > Intruder > Rare Event > Harvest > Sell > Pet > Sprinkler > Pack > Plant > Buy > Expand")
-print(" Pet/Sprinkler transactions stay locked until finished unless safety/rare priority preempts")
+print(" GAG2 FARMER V3.2.1 - FAST PROGRESS ACTIVE")
+print(" Punk-style farm speed + coordinated travel transactions")
 print("============================================")
